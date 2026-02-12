@@ -97,7 +97,7 @@ function submitGate(e) {
 }
 
 // ===== COUNTDOWN TIMER =====
-const UNLOCK_TIME = new Date('2025-02-14T00:01:00+05:30').getTime();
+const UNLOCK_TIME = new Date('2026-02-14T00:01:00+05:30').getTime();
 
 // Cheeky lines per girl
 const COUNTDOWN_LINES = {
