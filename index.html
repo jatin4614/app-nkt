@@ -15,8 +15,7 @@
             --text: #f0f0f0;
             --dim: #555;
             --accent: #c8a97e;
-            --accent-dim: rgba(200, 169, 126, 0.08);
-            --red: #8b1a1a;
+            --accent-dim: rgba(200, 169, 126, 0.06);
         }
 
         html { overflow-x: hidden; }
@@ -30,7 +29,6 @@
             transition: filter 0.3s;
         }
 
-        /* Noise overlay */
         body::after {
             content: '';
             position: fixed;
@@ -48,7 +46,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 2rem 1.5rem;
+            padding: 3rem 2rem;
             position: relative;
         }
         .page.active { display: flex; }
@@ -83,91 +81,111 @@
         #page2 { gap: 0; }
 
         .clue-header {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: clamp(0.55rem, 1.5vw, 0.7rem);
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            color: var(--dim);
-            margin-bottom: 2rem;
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: clamp(1.2rem, 3vw, 1.6rem);
+            color: var(--accent);
+            margin-bottom: 2.5rem;
             opacity: 0;
             transition: all 0.8s;
+            text-align: center;
         }
         .clue-header.show { opacity: 1; }
 
-        .clues-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0.8rem;
-            max-width: 700px;
+        .clues-list {
+            max-width: 550px;
             width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
         }
 
         .clue {
-            padding: 1rem 1.2rem;
+            padding: 1rem 1.5rem;
             border-left: 2px solid var(--accent);
             background: var(--accent-dim);
             font-family: 'Playfair Display', serif;
             font-style: italic;
-            font-size: clamp(0.8rem, 1.8vw, 0.95rem);
-            line-height: 1.5;
+            font-size: clamp(0.9rem, 2vw, 1.05rem);
+            line-height: 1.6;
             opacity: 0;
-            transform: translateY(10px);
-            transition: all 0.5s ease;
+            transform: translateX(-15px);
+            transition: all 0.6s ease;
         }
-        .clue.show { opacity: 1; transform: translateY(0); }
-        .clue .em { font-style: normal; margin-right: 0.3rem; }
-        .clue.wide { grid-column: 1 / -1; text-align: center; border-left: none; border-bottom: 1px solid var(--accent); }
+        .clue.show { opacity: 1; transform: translateX(0); }
+        .clue .em { font-style: normal; margin-right: 0.4rem; }
+
+        .clue.last {
+            border-left: none;
+            border-bottom: 1px solid var(--accent);
+            text-align: center;
+            background: transparent;
+            margin-top: 0.5rem;
+            padding: 1rem 1.5rem 1.2rem;
+        }
 
         /* ===== PAGE 3: PHOTOS ===== */
         #page3 {
-            padding: 2rem 1rem;
+            padding: 3rem 1.5rem;
             gap: 0;
         }
 
-        .photo-strip {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 0.6rem;
-            max-width: 900px;
+        .photos-heading {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            color: var(--accent);
+            margin-bottom: 2rem;
+            opacity: 0;
+            transition: all 0.8s;
+            text-align: center;
+        }
+        .photos-heading.show { opacity: 1; }
+
+        .photo-gallery {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            max-width: 380px;
             width: 100%;
         }
 
         .p-card {
             position: relative;
             overflow: hidden;
+            border-radius: 4px;
             opacity: 0;
-            transform: scale(0.95);
-            transition: all 0.6s ease;
+            transform: translateY(15px);
+            transition: all 0.7s ease;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.5);
         }
-        .p-card.show { opacity: 1; transform: scale(1); }
+        .p-card.show { opacity: 1; transform: translateY(0); }
 
         .p-card img {
             width: 100%;
             display: block;
             aspect-ratio: 3/4;
             object-fit: cover;
-            filter: contrast(1.1) brightness(0.9);
-            border-radius: 2px;
+            filter: contrast(1.05) brightness(0.95);
         }
 
         .p-card .cap {
             position: absolute;
             bottom: 0; left: 0; right: 0;
-            padding: 2.5rem 0.8rem 0.8rem;
+            padding: 3rem 1rem 1rem;
             background: linear-gradient(transparent, rgba(0,0,0,0.85));
-            font-family: 'JetBrains Mono', monospace;
-            font-size: clamp(0.55rem, 1.3vw, 0.7rem);
-            color: var(--dim);
-            letter-spacing: 0.5px;
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: clamp(0.85rem, 2vw, 1rem);
+            color: rgba(255,255,255,0.8);
+            letter-spacing: 0.3px;
         }
 
         /* ===== PAGE 4: THE READ ===== */
-        #page4 {
-            padding: 3rem 2rem;
-        }
+        #page4 { padding: 3rem 2rem; }
 
         .read-block {
-            max-width: 550px;
+            max-width: 500px;
             width: 100%;
             text-align: center;
         }
@@ -175,21 +193,21 @@
         .r-line {
             font-family: 'Playfair Display', serif;
             font-style: italic;
-            font-size: clamp(0.95rem, 2.2vw, 1.15rem);
+            font-size: clamp(1rem, 2.2vw, 1.15rem);
             line-height: 1.8;
             opacity: 0;
             transform: translateY(8px);
             transition: all 0.8s ease;
-            margin: 0.4rem 0;
+            margin: 0.5rem 0;
         }
         .r-line.show { opacity: 1; transform: translateY(0); }
-        .r-line.dim { color: var(--dim); font-size: clamp(0.85rem, 1.8vw, 1rem); }
+        .r-line.dim { color: var(--dim); }
         .r-line.accent { color: var(--accent); }
         .r-line.big {
             font-family: 'Space Grotesk', sans-serif;
             font-style: normal;
             font-weight: 600;
-            font-size: clamp(1.2rem, 3vw, 1.6rem);
+            font-size: clamp(1.3rem, 3vw, 1.6rem);
             margin-top: 0.5rem;
         }
 
@@ -211,7 +229,7 @@
 
         .f-line {
             font-size: clamp(1rem, 2.5vw, 1.2rem);
-            line-height: 2;
+            line-height: 2.2;
             color: var(--dim);
             opacity: 0;
             transition: all 1s;
@@ -226,19 +244,19 @@
         }
 
         .a-main {
-            font-size: clamp(1.2rem, 3.5vw, 1.6rem);
-            font-weight: 600;
-            line-height: 1.8;
-            letter-spacing: 1px;
+            font-size: clamp(1.1rem, 3vw, 1.4rem);
+            font-weight: 500;
+            line-height: 2;
+            letter-spacing: 0.5px;
             opacity: 0;
             transform: translateY(10px);
             transition: all 1s;
         }
         .a-main.show { opacity: 1; transform: translateY(0); }
-        .a-main .gold { color: var(--accent); }
+        .a-main .gold { color: var(--accent); font-weight: 600; }
 
         .a-sub {
-            font-size: clamp(0.8rem, 1.8vw, 0.95rem);
+            font-size: clamp(0.8rem, 1.8vw, 0.9rem);
             color: var(--dim);
             font-style: italic;
             margin-top: 0.5rem;
@@ -339,30 +357,25 @@
         .nav-btn:hover { border-color: var(--accent); color: var(--accent); }
 
         /* ===== RESPONSIVE ===== */
-        @media (max-width: 500px) {
-            .clues-grid { grid-template-columns: 1fr; }
-            .photo-strip { grid-template-columns: 1fr 1fr; }
+        @media (min-width: 768px) {
+            .photo-gallery {
+                flex-direction: row;
+                flex-wrap: wrap;
+                max-width: 800px;
+                justify-content: center;
+                gap: 1rem;
+            }
+            .p-card { width: calc(33% - 1rem); }
         }
 
-        @media (min-width: 501px) and (max-width: 768px) {
-            .photo-strip { grid-template-columns: repeat(3, 1fr); }
-        }
-
-        @media (min-width: 769px) and (max-width: 1200px) {
-            .photo-strip { grid-template-columns: repeat(5, 1fr); }
-            .clues-grid { grid-template-columns: repeat(3, 1fr); }
-        }
-
-        @media (min-width: 1201px) {
-            .photo-strip { grid-template-columns: repeat(5, 1fr); }
-            .clues-grid { grid-template-columns: repeat(4, 1fr); }
+        @media (min-width: 1200px) {
+            .photo-gallery { max-width: 1000px; }
+            .p-card { width: calc(20% - 1rem); }
             .page { padding: 3rem 4rem; }
         }
 
-        /* TV */
         @media (min-width: 1920px) {
             .page { padding: 4rem 8rem; }
-            .clue { padding: 1.5rem 2rem; }
         }
     </style>
 </head>
@@ -379,41 +392,42 @@
 
     <!-- PAGE 2: CLUES -->
     <section id="page2" class="page">
-        <p class="clue-header">Someone's been paying attention</p>
-        <div class="clues-grid">
+        <p class="clue-header">Think you're hard to read? Think again. 😏</p>
+        <div class="clues-list">
             <div class="clue" data-d="0"><span class="em">🕯️</span> She lights a lavender candle when the world gets too loud</div>
-            <div class="clue" data-d="300"><span class="em">⚛️</span> She talks about quantum like it's poetry</div>
-            <div class="clue" data-d="600"><span class="em">🎬</span> Comfort movie? Munna Bhai. Every time.</div>
-            <div class="clue" data-d="900"><span class="em">🍳</span> Cooks anything — except chapati. Don't ask for chai.</div>
-            <div class="clue" data-d="1200"><span class="em">🐘</span> Ele knows all her secrets</div>
-            <div class="clue" data-d="1500"><span class="em">👗</span> Doesn't go out much. But when she does — everyone knows.</div>
-            <div class="clue wide" data-d="1800"><span class="em">🎂</span> October 22nd. The world got a little more dangerous that day.</div>
+            <div class="clue" data-d="400"><span class="em">⚛️</span> She talks about quantum like it's poetry... and she's right</div>
+            <div class="clue" data-d="800"><span class="em">🎬</span> Comfort movie? Munna Bhai. Every. Single. Time.</div>
+            <div class="clue" data-d="1200"><span class="em">🍳</span> Cooks anything — except chapati. And don't even ask for chai.</div>
+            <div class="clue" data-d="1600"><span class="em">🐘</span> Ele knows all her secrets</div>
+            <div class="clue" data-d="2000"><span class="em">👗</span> Doesn't step out much. But when she does — the room remembers.</div>
+            <div class="clue last" data-d="2400"><span class="em">🎂</span> October 22nd. The world got a little more dangerous that day.</div>
         </div>
         <button class="nav-btn" onclick="goTo(3)">→</button>
     </section>
 
     <!-- PAGE 3: PHOTOS -->
     <section id="page3" class="page">
-        <div class="photo-strip">
+        <p class="photos-heading">Exhibit A through E... your honour 🔥</p>
+        <div class="photo-gallery">
             <div class="p-card" data-d="0">
                 <img src="images/n1.png" alt="">
-                <div class="cap">// doesn't go out much, they said</div>
+                <div class="cap">"Doesn't go out much" ... sure about that?</div>
             </div>
-            <div class="p-card" data-d="200">
+            <div class="p-card" data-d="300">
                 <img src="images/n2.png" alt="">
-                <div class="cap">// fashion that erases memories</div>
-            </div>
-            <div class="p-card" data-d="400">
-                <img src="images/n3.png" alt="">
-                <div class="cap">// overachiever in every frame</div>
+                <div class="cap">Fashion that makes the room go quiet</div>
             </div>
             <div class="p-card" data-d="600">
-                <img src="images/n4.png" alt="">
-                <div class="cap">// still dodges my calls though</div>
+                <img src="images/n3.png" alt="">
+                <div class="cap">The elegance isn't even trying</div>
             </div>
-            <div class="p-card" data-d="800">
+            <div class="p-card" data-d="900">
+                <img src="images/n4.png" alt="">
+                <div class="cap">Workaholic. Overachiever. Still dodges my calls.</div>
+            </div>
+            <div class="p-card" data-d="1200">
                 <img src="images/n5.png" alt="">
-                <div class="cap">// yeah... I'm in trouble</div>
+                <div class="cap">Yeah... I didn't stand a chance</div>
             </div>
         </div>
         <button class="nav-btn show" style="margin-top:1.5rem" onclick="goTo(4)">→</button>
@@ -423,15 +437,15 @@
     <section id="page4" class="page">
         <div class="read-block">
             <p class="r-line dim" data-d="0">You act like nothing gets to you</p>
-            <p class="r-line" data-d="500">The nonchalant queen who leaves everyone on read</p>
-            <div class="r-divider" data-d="1000"></div>
-            <p class="r-line accent" data-d="1300">But I see it, Nikita.</p>
-            <p class="r-line" data-d="1800">That part of you that wants to let go</p>
-            <p class="r-line" data-d="2300">The soft side you hide behind the bubble</p>
-            <p class="r-line" data-d="2800">The one who wants to be vulnerable</p>
-            <p class="r-line dim" data-d="3300">but keeps herself locked away</p>
-            <div class="r-divider" data-d="3800"></div>
-            <p class="r-line big" data-d="4200">...I notice.</p>
+            <p class="r-line" data-d="600">The nonchalant queen who leaves everyone on read</p>
+            <div class="r-divider" data-d="1200"></div>
+            <p class="r-line accent" data-d="1500">But I see it, Nikita.</p>
+            <p class="r-line" data-d="2000">That part of you that wants to let go</p>
+            <p class="r-line" data-d="2500">The soft side you hide behind the bubble</p>
+            <p class="r-line" data-d="3000">The one who wants to be vulnerable</p>
+            <p class="r-line dim" data-d="3500">but keeps herself locked away</p>
+            <div class="r-divider" data-d="4000"></div>
+            <p class="r-line big" data-d="4500">...I notice.</p>
         </div>
         <button class="nav-btn" onclick="goTo(5)">→</button>
     </section>
@@ -452,8 +466,12 @@
     <!-- PAGE 6: THE ASK -->
     <section id="page6" class="page">
         <div class="ask-block">
-            <p class="a-main"><span class="gold">March.</span><br>You. Me.<br>Somewhere you've never been.</p>
-            <p class="a-sub">Don't overthink it.</p>
+            <p class="a-main">
+                One date.<br>
+                <span class="gold">March.</span> You and me.<br>
+                Just to see what happens.
+            </p>
+            <p class="a-sub">No strings. No drama. Just vibes.</p>
             <div class="btns">
                 <button class="b-fine" onclick="sayFine()">Fine 🙄</button>
                 <button class="b-think" id="btn-think" onmouseover="runAway(this)" onclick="runAway(this)">I'll think about it...</button>
@@ -478,7 +496,7 @@
         }
 
         function anim(page) {
-            page.querySelectorAll('.clue-header').forEach(e => e.classList.add('show'));
+            page.querySelectorAll('.clue-header, .photos-heading').forEach(e => e.classList.add('show'));
             page.querySelectorAll('.clue, .p-card, .r-line, .r-divider').forEach(e => {
                 setTimeout(() => e.classList.add('show'), parseInt(e.dataset.d || 0) + 200);
             });
