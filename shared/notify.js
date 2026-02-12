@@ -90,17 +90,106 @@ function submitGate(e) {
     // Send "opened" notification
     sendNotify('opened the page', '—');
 
-    // Remove gate, show site
-    const gate = document.getElementById('email-gate');
-    gate.style.opacity = '0';
-    gate.style.transition = 'opacity 0.8s';
-
-    setTimeout(() => {
-        gate.remove();
-        if (window._gateUnlock) window._gateUnlock();
-    }, 800);
+    // Check if it's time to unlock (00:01 AM IST, Feb 14 2025)
+    showCountdownOrUnlock();
 
     return false;
+}
+
+// ===== COUNTDOWN TIMER =====
+const UNLOCK_TIME = new Date('2025-02-14T00:01:00+05:30').getTime();
+
+// Cheeky lines per girl
+const COUNTDOWN_LINES = {
+    'Mansi': { emoji: '😏', line: "Patience, Mansi... good things come to those who wait", sub: "Something's cooking for you 🔥" },
+    'Parakastha': { emoji: '💃', line: "Not yet, Parakastha... the universe isn't ready for what's coming", sub: "Hang tight, superstar ✨" },
+    'Nikita': { emoji: '🖤', line: "You're early. Typical. But even I can't rush this one", sub: "Good things take time... unlike your replies 😏" },
+    'Prachi': { emoji: '💜', line: "Some things are worth the wait, Prachi... trust me on this one", sub: "Just a little longer 🤍" }
+};
+
+function showCountdownOrUnlock() {
+    const now = Date.now();
+
+    if (now >= UNLOCK_TIME) {
+        // Time's up — unlock the site
+        const gate = document.getElementById('email-gate');
+        gate.style.opacity = '0';
+        gate.style.transition = 'opacity 0.8s';
+        setTimeout(() => {
+            gate.remove();
+            if (window._gateUnlock) window._gateUnlock();
+        }, 800);
+        return;
+    }
+
+    // Show countdown
+    const girlName = getGirlName();
+    const data = COUNTDOWN_LINES[girlName] || { emoji: '💘', line: "Not yet... something special is coming", sub: "Stay tuned ✨" };
+
+    const gate = document.getElementById('email-gate');
+    gate.querySelector('.gate-content').innerHTML = `
+        <p class="countdown-emoji">${data.emoji}</p>
+        <p class="countdown-line">${data.line}</p>
+        <div class="countdown-timer" id="countdown-timer">
+            <div class="countdown-unit">
+                <span class="countdown-num" id="cd-days">00</span>
+                <span class="countdown-label">days</span>
+            </div>
+            <div class="countdown-sep">:</div>
+            <div class="countdown-unit">
+                <span class="countdown-num" id="cd-hours">00</span>
+                <span class="countdown-label">hours</span>
+            </div>
+            <div class="countdown-sep">:</div>
+            <div class="countdown-unit">
+                <span class="countdown-num" id="cd-mins">00</span>
+                <span class="countdown-label">min</span>
+            </div>
+            <div class="countdown-sep">:</div>
+            <div class="countdown-unit">
+                <span class="countdown-num" id="cd-secs">00</span>
+                <span class="countdown-label">sec</span>
+            </div>
+        </div>
+        <p class="countdown-sub">${data.sub}</p>
+        <p class="countdown-date">February 14th, 00:01 AM ❤️</p>
+    `;
+
+    // Start ticking
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+}
+
+function updateCountdown() {
+    const now = Date.now();
+    const diff = UNLOCK_TIME - now;
+
+    if (diff <= 0) {
+        // Unlock!
+        const gate = document.getElementById('email-gate');
+        gate.style.opacity = '0';
+        gate.style.transition = 'opacity 0.8s';
+        setTimeout(() => {
+            gate.remove();
+            if (window._gateUnlock) window._gateUnlock();
+        }, 800);
+        return;
+    }
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+    const d = document.getElementById('cd-days');
+    const h = document.getElementById('cd-hours');
+    const m = document.getElementById('cd-mins');
+    const s = document.getElementById('cd-secs');
+
+    if (d) d.textContent = String(days).padStart(2, '0');
+    if (h) h.textContent = String(hours).padStart(2, '0');
+    if (m) m.textContent = String(mins).padStart(2, '0');
+    if (s) s.textContent = String(secs).padStart(2, '0');
 }
 
 // Gate styles
@@ -195,6 +284,78 @@ gateStyle.textContent = `
     .gate-form button:hover {
         background: #c8a97e;
         color: #050505;
+    }
+
+    /* Countdown */
+    .countdown-emoji {
+        font-size: 3rem;
+        margin-bottom: 1.5rem;
+        animation: gatePulse 2s ease-in-out infinite;
+    }
+
+    .countdown-line {
+        font-family: 'Playfair Display', 'Cormorant Garamond', serif;
+        font-size: clamp(1rem, 3vw, 1.4rem);
+        font-style: italic;
+        color: #e8e0d8;
+        max-width: 400px;
+        line-height: 1.8;
+        margin-bottom: 2.5rem;
+        text-align: center;
+    }
+
+    .countdown-timer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .countdown-unit {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-width: 60px;
+    }
+
+    .countdown-num {
+        font-family: 'JetBrains Mono', 'Space Grotesk', monospace;
+        font-size: clamp(2rem, 6vw, 3.5rem);
+        font-weight: 600;
+        color: #c8a97e;
+        line-height: 1;
+        letter-spacing: 2px;
+    }
+
+    .countdown-label {
+        font-size: clamp(0.6rem, 1.5vw, 0.75rem);
+        color: #555;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-top: 0.4rem;
+    }
+
+    .countdown-sep {
+        font-size: clamp(1.5rem, 4vw, 2.5rem);
+        color: #333;
+        font-weight: 300;
+        padding-bottom: 1rem;
+    }
+
+    .countdown-sub {
+        font-size: clamp(0.8rem, 2vw, 0.95rem);
+        color: #666;
+        font-style: italic;
+        margin-bottom: 0.5rem;
+    }
+
+    .countdown-date {
+        font-size: clamp(0.65rem, 1.5vw, 0.75rem);
+        color: #444;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-top: 0.5rem;
     }
 `;
 document.head.appendChild(gateStyle);
