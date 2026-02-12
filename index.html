@@ -93,35 +93,52 @@
         .clue-header.show { opacity: 1; }
 
         .clues-list {
-            max-width: 550px;
+            max-width: 500px;
             width: 100%;
             display: flex;
             flex-direction: column;
-            gap: 0.6rem;
+            gap: 1.2rem;
         }
 
         .clue {
-            padding: 1rem 1.5rem;
+            padding: 1.2rem 1.5rem;
             border-left: 2px solid var(--accent);
             background: var(--accent-dim);
             font-family: 'Playfair Display', serif;
             font-style: italic;
-            font-size: clamp(0.9rem, 2vw, 1.05rem);
-            line-height: 1.6;
+            font-size: clamp(0.95rem, 2.2vw, 1.1rem);
+            line-height: 1.7;
             opacity: 0;
             transform: translateX(-15px);
             transition: all 0.6s ease;
+            border-radius: 0 6px 6px 0;
         }
         .clue.show { opacity: 1; transform: translateX(0); }
-        .clue .em { font-style: normal; margin-right: 0.4rem; }
+        .clue .em { font-style: normal; margin-right: 0.5rem; font-size: 1.1em; }
+
+        .clue.ele-clue {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.8rem 1.2rem;
+        }
+
+        .clue.ele-clue img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
 
         .clue.last {
             border-left: none;
             border-bottom: 1px solid var(--accent);
             text-align: center;
             background: transparent;
-            margin-top: 0.5rem;
-            padding: 1rem 1.5rem 1.2rem;
+            margin-top: 0.3rem;
+            padding: 1.2rem 1.5rem;
+            border-radius: 0;
         }
 
         /* ===== PAGE 3: PHOTOS ===== */
@@ -145,9 +162,10 @@
         .photo-gallery {
             display: flex;
             flex-direction: column;
-            gap: 1.5rem;
-            max-width: 380px;
+            gap: 2rem;
             width: 100%;
+            max-width: 480px;
+            align-items: center;
         }
 
         .p-card {
@@ -155,9 +173,10 @@
             overflow: hidden;
             border-radius: 4px;
             opacity: 0;
-            transform: translateY(15px);
+            transform: translateY(20px);
             transition: all 0.7s ease;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+            width: 100%;
         }
         .p-card.show { opacity: 1; transform: translateY(0); }
 
@@ -172,12 +191,12 @@
         .p-card .cap {
             position: absolute;
             bottom: 0; left: 0; right: 0;
-            padding: 3rem 1rem 1rem;
-            background: linear-gradient(transparent, rgba(0,0,0,0.85));
+            padding: 3.5rem 1.2rem 1.2rem;
+            background: linear-gradient(transparent, rgba(0,0,0,0.9));
             font-family: 'Playfair Display', serif;
             font-style: italic;
-            font-size: clamp(0.85rem, 2vw, 1rem);
-            color: rgba(255,255,255,0.8);
+            font-size: clamp(0.95rem, 2.2vw, 1.1rem);
+            color: rgba(255,255,255,0.85);
             letter-spacing: 0.3px;
         }
 
@@ -358,24 +377,19 @@
 
         /* ===== RESPONSIVE ===== */
         @media (min-width: 768px) {
-            .photo-gallery {
-                flex-direction: row;
-                flex-wrap: wrap;
-                max-width: 800px;
-                justify-content: center;
-                gap: 1rem;
-            }
-            .p-card { width: calc(33% - 1rem); }
+            .photo-gallery { max-width: 550px; }
+            .clues-list { max-width: 580px; }
+            .page { padding: 3rem; }
         }
 
         @media (min-width: 1200px) {
-            .photo-gallery { max-width: 1000px; }
-            .p-card { width: calc(20% - 1rem); }
+            .photo-gallery { max-width: 600px; }
             .page { padding: 3rem 4rem; }
         }
 
         @media (min-width: 1920px) {
             .page { padding: 4rem 8rem; }
+            .photo-gallery { max-width: 700px; }
         }
     </style>
 </head>
@@ -398,7 +412,7 @@
             <div class="clue" data-d="400"><span class="em">⚛️</span> She talks about quantum like it's poetry... and she's right</div>
             <div class="clue" data-d="800"><span class="em">🎬</span> Comfort movie? Munna Bhai. Every. Single. Time.</div>
             <div class="clue" data-d="1200"><span class="em">🍳</span> Cooks anything — except chapati. And don't even ask for chai.</div>
-            <div class="clue" data-d="1600"><span class="em">🐘</span> Ele knows all her secrets</div>
+            <div class="clue ele-clue" data-d="1600"><img src="images/ele.jpg" alt="Ele"> <span>Ele knows all her secrets... and so do I now 🐘</span></div>
             <div class="clue" data-d="2000"><span class="em">👗</span> Doesn't step out much. But when she does — the room remembers.</div>
             <div class="clue last" data-d="2400"><span class="em">🎂</span> October 22nd. The world got a little more dangerous that day.</div>
         </div>
